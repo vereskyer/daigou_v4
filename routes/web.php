@@ -41,10 +41,11 @@ Route::middleware('auth')->group(function () {
 // admin routes
 Route::group(['prefix' => 'admin', 'middleware' => 'redirectAdmin'], function () {
     Route::get('/login', [AuthAdminController::class, 'showLoginForm'])->name('admin.login');
+    Route::post('/login', [AuthAdminController::class, 'login'])->name('admin.login.post');
 });
 
 Route::middleware('auth', 'admin')->prefix('admin')->group(function () {
-    Route::get('/', [AdminController::class, 'index'])->name('admin')->name('admin.dashboard');
+    Route::get('/', [AdminController::class, 'index'])->name('admin.dashboard');
 });
 
 require __DIR__.'/auth.php';
