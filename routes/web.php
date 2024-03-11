@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AuthAdminController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -25,7 +26,7 @@ Route::get('/', function () {
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
-});
+})->name('home');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
@@ -38,6 +39,12 @@ Route::middleware('auth')->group(function () {
 });
 
 // admin routes
-Route::get('/admin', [AdminController::class, 'index'])->name('admin');
+Route::group(['prefix' => 'admin', 'middleware' => 'redirectAdmin'], function () {
+    Route::get('/login', [AuthAdminController::class, 'showLoginForm'])->name('admin.login');
+});
+
+Route::middleware('auth', 'admin')->prefix('admin')->group(function () {
+    Route::get('/', [AdminController::class, 'index'])->name('admin')->name('admin.dashboard');
+});
 
 require __DIR__.'/auth.php';
