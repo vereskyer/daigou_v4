@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             'password' => 'ganlanshu',
             'email_verified_at' => now(),
             'remember_token' => Str::random(10),
+            'is_admin' => true
         ]);
         User::create([
             'name' => 'aaa',
@@ -30,6 +31,7 @@ class DatabaseSeeder extends Seeder
             'password' => 'ganlanshu',
             'email_verified_at' => now(),
             'remember_token' => Str::random(10),
+            'is_admin' => false
         ]);
     }
 }
