@@ -154,7 +154,7 @@ console.log(shoporders);
                                     <tr v-for="shoporder in shoporders" :key="shoporder.id" class="border-b dark:border-gray-700">
                                         <th scope="row"
                                             class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            {{ shoporder.user_id }}</th>
+                                            {{ shoporder.user.name }}</th>
                                         <td class="px-4 py-3">{{ shoporder.shop_name }}</td>
                                         <td class="px-4 py-3">{{ shoporder.building }}</td>
                                         <td class="px-4 py-3">{{ shoporder.position }}</td>

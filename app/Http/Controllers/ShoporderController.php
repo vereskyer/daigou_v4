@@ -10,7 +10,7 @@ class ShoporderController extends Controller
 {
     public function index()
     {
-        $shoporders = Shoporder::query()->get();
+        $shoporders = Shoporder::with('user:id,name')->get();
         return Inertia::render('Admin/Shoporder', [
             'shoporders' => $shoporders
         ]);
