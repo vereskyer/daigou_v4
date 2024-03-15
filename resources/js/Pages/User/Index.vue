@@ -1,5 +1,10 @@
+<script setup>
+import Layouts from '@/Pages/User/components/Layouts.vue'
+</script>
 <template>
-    <div>
-        <h1>usercenter</h1>
-    </div>
+    <Layouts>
+        <div>
+            <h1>usercenter</h1>
+        </div>
+    </Layouts>
 </template>
