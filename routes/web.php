@@ -36,8 +36,8 @@ Route::middleware('auth', 'verified')->prefix('user')->group(function () {
         return Inertia::render('User/Index');
     })->name('user.index');
 
-    // Route::get('/shoporders', [\App\Http\Controllers\ShoporderController::class, 'index'])
-    // ->name('user.shoporders');
+    Route::get('/shoporders', [\App\Http\Controllers\ShoporderController::class, 'userShoporders'])
+    ->name('user.shoporders');
 
     // Route::post('/shoporders', [\App\Http\Controllers\ShoporderController::class, 'shoporderStore'])
     // ->name('user.shoporders.store');

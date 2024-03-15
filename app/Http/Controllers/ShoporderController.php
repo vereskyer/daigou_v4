@@ -17,4 +17,15 @@ class ShoporderController extends Controller
             'shoporders' => $shoporders
         ]);
     }
+
+    public function userShoporders()
+    {
+        $shoporders = Shoporder::with('user:id,name')
+            ->where('user_id', auth()->user()->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+        return Inertia::render('User/Shoporder', [
+            'shoporders' => $shoporders
+        ]);
+    }
 }
