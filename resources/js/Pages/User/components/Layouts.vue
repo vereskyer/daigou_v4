@@ -1,8 +1,8 @@
 <script setup>
 import { onMounted } from 'vue'
 import { initFlowbite } from 'flowbite'
-import Sidebar from '@/Pages/Admin/components/Sidebar.vue'
-import Navbar from '@/Pages/Admin/components/Navbar.vue'
+import Sidebar from '@/Pages/User/components/Sidebar.vue'
+import Navbar from '@/Pages/User/components/Navbar.vue'
 
 // initialize components based on data attribute selectors
 onMounted(() => {
