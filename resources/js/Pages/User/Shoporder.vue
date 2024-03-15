@@ -1,9 +1,35 @@
 <script setup>
 import Layouts from '@/Pages/User/components/Layouts.vue'
 import { usePage } from '@inertiajs/vue3'
+import { ref } from 'vue'
+import { ElMessageBox } from 'element-plus'
+
+const dialogVisible = ref(false)
+
+
+const editMode = ref(false)
+const isAddProduct = ref(false)
+
+// open add modal
+const openAddModal = () => {
+    isAddProduct.value = true
+    dialogVisible.value = true
+    editMode.value = false
+}
+
+
+const handleClose = () => {
+  ElMessageBox.confirm('Are you sure to close this dialog?')
+    .then(() => {
+      done()
+    })
+    .catch(() => {
+      // catch error
+    })
+}
 
 const shoporders = usePage().props.shoporders
-console.log(shoporders);
+
 </script>
 <template>
     <Layouts>
@@ -11,6 +37,20 @@ console.log(shoporders);
             <section class="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">
                 <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
                     <!-- Start coding here -->
+                    <!-- elementui eldialog -->
+                    <el-dialog v-model="dialogVisible" title="Tips" width="500" :before-close="handleClose">
+                        <span>This is a message</span>
+                        <template #footer>
+                            <div class="dialog-footer">
+                                <el-button @click="dialogVisible = false">Cancel</el-button>
+                                <el-button type="primary" @click="dialogVisible = false">
+                                    Confirm
+                                </el-button>
+                            </div>
+                        </template>
+                    </el-dialog>
+                    <!--end elementui eldialog -->
+
                     <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
                         <div
                             class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
@@ -36,14 +76,14 @@ console.log(shoporders);
                             </div>
                             <div
                                 class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-                                <button type="button"
+                                <button type="button"  @click="openAddModal"
                                     class="flex items-center justify-center text-blue bg-white-700 hover:bg-blue-500 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                                     <svg class="h-3.5 w-3.5 mr-2" fill="currentColor" viewbox="0 0 20 20"
                                         xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                         <path clip-rule="evenodd" fill-rule="evenodd"
                                             d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
                                     </svg>
-                                    Add product
+                                    添加市場取貨訂單
                                 </button>
                                 <div class="flex items-center space-x-3 w-full md:w-auto">
                                     <button id="actionsDropdownButton" data-dropdown-toggle="actionsDropdown"
@@ -151,7 +191,8 @@ console.log(shoporders);
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="shoporder in shoporders" :key="shoporder.id" class="border-b dark:border-gray-700">
+                                    <tr v-for="shoporder in shoporders" :key="shoporder.id"
+                                        class="border-b dark:border-gray-700">
                                         <th scope="row"
                                             class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                             {{ shoporder.user.name }}</th>
@@ -162,7 +203,7 @@ console.log(shoporders);
                                         <td class="px-4 py-3">{{ shoporder.description }}</td>
                                         <td class="px-4 py-3">{{ shoporder.status }}</td>
                                         <td class="px-4 py-3 flex items-center justify-end">
-                                            <button :id="`${shoporder.id}-button`" 
+                                            <button :id="`${shoporder.id}-button`"
                                                 :data-dropdown-toggle="`${shoporder.id}`"
                                                 class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
                                                 type="button">
