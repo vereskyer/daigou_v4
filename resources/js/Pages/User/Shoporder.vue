@@ -54,6 +54,21 @@ const AddProduct = async () => {
     }
 }
 
+const openEditModal = (shoporder) => {
+    console.log(shoporder);
+    editMode.value = true
+    isAddProduct.value = false
+    dialogVisible.value = true
+
+    // Bring in data
+    shop_name.value = shoporder.shop_name
+    building.value = shoporder.building
+    position.value = shoporder.position
+    phone.value = shoporder.phone
+    description.value = shoporder.description
+}
+
+
 const resetFormData = () => {
     shop_name.value = ''
     building.value = ''
@@ -63,6 +78,12 @@ const resetFormData = () => {
 }
 
 
+/**
+ * Function to handle closing of dialog.
+ *
+ * @param {function} done - Callback function to be executed after dialog is closed.
+ * @return {void} 
+ */
 const handleClose = (done) => {
     ElMessageBox.confirm('Are you sure to close this dialog?')
         .then(() => {
@@ -90,7 +111,7 @@ defineProps({
                         <!-- <span>This is a message</span> -->
 
 
-                        <form @submit.prevent="AddProduct()" class="max-w-md mx-auto">
+                        <form @submit.prevent="editMode? updateProduct() : AddProduct()" class="max-w-md mx-auto">
                             <div class="relative z-0 w-full mb-5 group">
                                 <input v-model="shop_name" type="text" name="floating_shop_name" id="floating_shop_name"
                                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
@@ -190,14 +211,15 @@ defineProps({
                                         <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
                                             aria-labelledby="actionsDropdownButton">
                                             <li>
-                                                <a href="#"
+                                                <a href="#" 
                                                     class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Mass
                                                     Edit</a>
                                             </li>
                                         </ul>
                                         <div class="py-1">
                                             <a href="#"
-                                                class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete
+                                                class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                                Delete
                                                 all</a>
                                         </div>
                                     </div>
@@ -307,7 +329,7 @@ defineProps({
                                                 <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
                                                     :aria-labelledby="`${shoporder.id}-button`">
                                                     <li>
-                                                        <a href="#"
+                                                        <a href="#" @click="openEditModal(shoporder)"
                                                             class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                                                             Edit</a>
                                                     </li>
