@@ -18,7 +18,7 @@ const openAddModal = () => {
 }
 
 
-const handleClose = () => {
+const handleClose = (done) => {
     ElMessageBox.confirm('Are you sure to close this dialog?')
         .then(() => {
             done()
