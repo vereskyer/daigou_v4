@@ -39,6 +39,10 @@ Route::middleware('auth', 'verified')->prefix('user')->group(function () {
     Route::get('/shoporders', [\App\Http\Controllers\ShoporderController::class, 'userShoporders'])
     ->name('user.shoporders');
 
+    Route::post('/shoporders', [\App\Http\Controllers\ShoporderController::class, 'shoporderStore'])
+    ->name('user.shoporders.store');
+
+
     // Route::post('/shoporders', [\App\Http\Controllers\ShoporderController::class, 'shoporderStore'])
     // ->name('user.shoporders.store');
 });

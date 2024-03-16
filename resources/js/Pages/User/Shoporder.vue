@@ -1,6 +1,6 @@
 <script setup>
 import Layouts from '@/Pages/User/components/Layouts.vue'
-import { usePage } from '@inertiajs/vue3'
+import { usePage, router } from '@inertiajs/vue3'
 import { ref } from 'vue'
 import { ElMessageBox } from 'element-plus'
 
@@ -10,11 +10,56 @@ const dialogVisible = ref(false)
 const editMode = ref(false)
 const isAddProduct = ref(false)
 
+// product form data
+const shop_name = ref('')
+const building = ref('')
+const position = ref('')
+const phone = ref('')
+const description = ref('')
+//end
+
+
 // open add modal
 const openAddModal = () => {
     isAddProduct.value = true
     dialogVisible.value = true
     editMode.value = false
+}
+
+// add product method
+const AddProduct = async () => {
+    const formData = new FormData();
+    formData.append('shop_name', shop_name.value);
+    formData.append('building', building.value);
+    formData.append('position', position.value);
+    formData.append('phone', phone.value);
+    formData.append('description', description.value);
+
+    try {
+        await router.post('/user/shoporders', formData, {
+            onSuccess: page => {
+                Swal.fire({
+                    toast: true,
+                    icon: 'success',
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    title: page.props.flash.success
+                })
+                dialogVisible.value = false;
+                resetFormData();
+            },
+        })
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+const resetFormData = () => {
+    shop_name.value = ''
+    building.value = ''
+    position.value = ''
+    phone.value = ''
+    description.value = ''
 }
 
 
@@ -42,9 +87,9 @@ const shoporders = usePage().props.shoporders
                         <!-- <span>This is a message</span> -->
 
 
-                        <form class="max-w-md mx-auto">
+                        <form @submit.prevent="AddProduct()" class="max-w-md mx-auto">
                             <div class="relative z-0 w-full mb-5 group">
-                                <input type="text" name="floating_shop_name" id="floating_shop_name"
+                                <input v-model="shop_name" type="text" name="floating_shop_name" id="floating_shop_name"
                                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                     placeholder=" " required />
                                 <label for="floating_shop_name"
@@ -52,7 +97,7 @@ const shoporders = usePage().props.shoporders
                                     档口名称</label>
                             </div>
                             <div class="relative z-0 w-full mb-5 group">
-                                <input type="text" name="floating_building" id="floating_building"
+                                <input v-model="building" type="text" name="floating_building" id="floating_building"
                                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                     placeholder=" " required />
                                 <label for="floating_building"
@@ -60,7 +105,7 @@ const shoporders = usePage().props.shoporders
                                     所属大楼</label>
                             </div>
                             <div class="relative z-0 w-full mb-5 group">
-                                <input type="text" name="floating_position" id="floating_position"
+                                <input v-model="position" type="text" name="floating_position" id="floating_position"
                                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                     placeholder=" " required />
                                 <label for="floating_position"
@@ -68,14 +113,13 @@ const shoporders = usePage().props.shoporders
                                     位置</label>
                             </div>
                             <div class="relative z-0 w-full mb-5 group">
-                                <input type="text" name="floating_phone" id="floating_phone"
+                                <input v-model="phone" type="text" name="floating_phone" id="floating_phone"
                                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                     placeholder=" " required />
                                 <label for="floating_phone"
                                     class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                                     电话</label>
                             </div>
-
                             <div class="relative z-0 w-full mb-6 group">
 
                                 <label for="description"
@@ -238,7 +282,7 @@ const shoporders = usePage().props.shoporders
                                         <th scope="row"
                                             class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                             {{ shoporder.user.name }}</th>
-                                        <td class="px-4 py-3">{{ shoporder.id }}</td>
+                                        <td class="px-4 py-3">{{ shoporder.shop_name }}</td>
                                         <td class="px-4 py-3">{{ shoporder.building }}</td>
                                         <td class="px-4 py-3">{{ shoporder.position }}</td>
                                         <td class="px-4 py-3">{{ shoporder.phone }}</td>
