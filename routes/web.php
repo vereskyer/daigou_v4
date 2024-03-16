@@ -42,6 +42,9 @@ Route::middleware('auth', 'verified')->prefix('user')->group(function () {
     Route::post('/shoporders', [\App\Http\Controllers\ShoporderController::class, 'shoporderStore'])
     ->name('user.shoporders.store');
 
+    Route::patch('/shoporders/{id}', [\App\Http\Controllers\ShoporderController::class, 'shoporderUpdate'])
+    ->name('user.shoporders.update');
+
 
     // Route::post('/shoporders', [\App\Http\Controllers\ShoporderController::class, 'shoporderStore'])
     // ->name('user.shoporders.store');

@@ -61,11 +61,38 @@ const openEditModal = (shoporder) => {
     dialogVisible.value = true
 
     // Bring in data
+    // id.value = shoporder.id
     shop_name.value = shoporder.shop_name
     building.value = shoporder.building
     position.value = shoporder.position
     phone.value = shoporder.phone
     description.value = shoporder.description
+}
+
+const updateProduct = async () => {
+    const formData = new FormData();
+    formData.append('shop_name', shop_name.value);
+    formData.append('building', building.value);
+    formData.append('position', position.value);
+    formData.append('phone', phone.value);
+    formData.append('description', description.value);
+    try {
+        await router.post('/user/shoporders/' + shoporder.id, formData, {
+            onSuccess: page => {
+                Swal.fire({
+                    toast: true,
+                    icon: 'success',
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    title: page.props.flash.success
+                })
+                dialogVisible.value = false;
+                resetFormData();
+            },
+        })
+    } catch (err) {
+        console.log(err)
+    }
 }
 
 
@@ -107,7 +134,7 @@ defineProps({
                 <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
                     <!-- Start coding here -->
                     <!-- elementui eldialog -->
-                    <el-dialog v-model="dialogVisible" title="提交市場取貨訂單" width="500" :before-close="handleClose">
+                    <el-dialog v-model="dialogVisible" :title="editMode? '編輯市場取貨訂單' : '提交市場取貨訂單'" width="500" :before-close="handleClose">
                         <!-- <span>This is a message</span> -->
 
 
