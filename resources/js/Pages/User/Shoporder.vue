@@ -73,7 +73,10 @@ const handleClose = (done) => {
         })
 }
 
-const shoporders = usePage().props.shoporders
+// const shoporders = usePage().props.shoporders
+defineProps({
+    shoporders: Array
+})
 
 </script>
 <template>
