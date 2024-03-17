@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('siteorders', function (Blueprint $table) {
+        Schema::create('siteorder_images', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->string('name');
-            $table->string('site');
-            $table->string('description');
+            $table->string('image');
+            $table->unsignedBigInteger('siteorder_id');
+            $table->foreign('siteorder_id')
+                ->references('id')
+                ->on('siteorders')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('siteorders');
+        Schema::dropIfExists('siteorder_images');
     }
 };
