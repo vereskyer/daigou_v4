@@ -17,6 +17,7 @@ const openAddModal = () => {
 }
 
 const openEditModal = (siteorder) => {
+    console.log(siteorder);
     dialogVisible.value = true
     isAddProduct.value = false
     editMode.value = true

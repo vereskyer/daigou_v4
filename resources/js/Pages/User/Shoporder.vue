@@ -11,6 +11,7 @@ const editMode = ref(false)
 const isAddProduct = ref(false)
 
 // product form data
+const id = ref('')
 const shop_name = ref('')
 const building = ref('')
 const position = ref('')
@@ -61,7 +62,8 @@ const openEditModal = (shoporder) => {
     dialogVisible.value = true
 
     // Bring in data
-    // id.value = shoporder.id
+    id.value = shoporder.id
+    console.log(id.value);
     shop_name.value = shoporder.shop_name
     building.value = shoporder.building
     position.value = shoporder.position
@@ -72,12 +74,15 @@ const openEditModal = (shoporder) => {
 const updateProduct = async () => {
     const formData = new FormData();
     formData.append('shop_name', shop_name.value);
+    console.log(shop_name.value);
     formData.append('building', building.value);
     formData.append('position', position.value);
     formData.append('phone', phone.value);
     formData.append('description', description.value);
+    formData.append('_method', 'put');
+
     try {
-        await router.post('/user/shoporders/' + shoporder.id, formData, {
+        await router.post('/user/shoporders/' + id.value, formData, {
             onSuccess: page => {
                 Swal.fire({
                     toast: true,
@@ -258,7 +263,8 @@ defineProps({
                                             aria-labelledby="actionsDropdownButton">
                                             <li>
                                                 <a href="#" 
-                                                    class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Mass
+                                                    class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                                    Mass
                                                     Edit</a>
                                             </li>
                                         </ul>

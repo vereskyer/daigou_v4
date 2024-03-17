@@ -48,13 +48,14 @@ class ShoporderController extends Controller
 
     public function shoporderUpdate(Request $request, $id)
     {
-        $shoporder = Shoporder::find($id);
+        $shoporder = Shoporder::findOrFail($id);
+        // dd($request->all());    
         $shoporder->shop_name = $request->shop_name;
         $shoporder->building = $request->building;
         $shoporder->position = $request->position;
         $shoporder->phone = $request->phone;
         $shoporder->description = $request->description;
-        $shoporder->save();
+        $shoporder->update();
         return redirect()->route('user.shoporders')->with('success', 'Product created successfully.');
     }
 
