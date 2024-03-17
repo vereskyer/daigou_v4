@@ -1,6 +1,6 @@
 <script setup>
 import Layouts from '@/Pages/User/components/Layouts.vue'
-import { usePage } from '@inertiajs/vue3'
+import { usePage, router } from '@inertiajs/vue3'
 
 import { ref } from 'vue'
 import { ElMessageBox } from 'element-plus'
@@ -21,6 +21,37 @@ const openAddModal = () => {
     dialogVisible.value = true
     isAddProduct.value = true
     editMode.value = false
+}
+
+const AddProduct = async () => {
+    const formData = new FormData();
+    formData.append('name', name.value);
+    formData.append('site', site.value);
+    formData.append('description', description.value);
+
+    try {
+        await router.post('/user/siteorders/store', formData, {
+            onSuccess: page => {
+                Swal.fire({
+                    toast: true,
+                    icon: 'success',
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    title: page.props.flash.success
+                })
+                dialogVisible.value = false;
+                resetFormData();
+            },
+        })
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+const resetFormData = () => {
+    name.value = ''
+    site.value = ''
+    description.value = ''
 }
 
 const openEditModal = (siteorder) => {
@@ -54,7 +85,7 @@ const siteorders = usePage().props.siteorders
                     :before-close="handleClose">
 
                     <!-- form from flowbite -->
-                    <form class="max-w-md mx-auto">
+                    <form @submit.prevent="editMode ? updateProduct() : AddProduct()" class="max-w-md mx-auto">
                         <div class="relative z-0 w-full mb-5 group">
                             <input v-model="name" type="text" name="floating_name" id="floating_name"
                                 class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
