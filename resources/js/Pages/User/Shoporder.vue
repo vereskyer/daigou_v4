@@ -104,6 +104,25 @@ const resetFormData = () => {
     description.value = ''
 }
 
+// delete shoporder
+const deleteShoporder = async (shoporder) => {
+    try {
+        await router.delete('/user/shoporders/' + shoporder.id, {
+            onSuccess: page => {
+                Swal.fire({
+                    toast: true,
+                    icon: 'success',
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    title: page.props.flash.success
+                })
+            },
+        })
+    } catch (err) {
+        console.log(err)
+    }
+}
+
 
 /**
  * Function to handle closing of dialog.
@@ -362,7 +381,7 @@ defineProps({
                                                     </li>
                                                 </ul>
                                                 <div class="py-1">
-                                                    <a href="#"
+                                                    <a href="#" @click="deleteShoporder(shoporder)"
                                                         class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                                                         Delete</a>
                                                 </div>

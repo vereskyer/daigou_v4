@@ -57,5 +57,12 @@ class ShoporderController extends Controller
         $shoporder->save();
         return redirect()->route('user.shoporders')->with('success', 'Product created successfully.');
     }
+
+    public function shoporderDelete($id)
+    {
+        $shoporder = Shoporder::find($id);
+        $shoporder->delete();
+        return redirect()->route('user.shoporders')->with('success', 'Product created successfully.');
+    }
 }
 
