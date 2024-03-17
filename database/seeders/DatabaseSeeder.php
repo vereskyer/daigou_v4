@@ -17,23 +17,24 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-        User::create([
-            'name' => 'admin',
-            'email' => 'admin@a.com',
-            'password' => 'ganlanshu',
-            'email_verified_at' => now(),
-            'remember_token' => Str::random(10),
-            'is_admin' => true
-        ]);
-        User::create([
-            'name' => 'aaa',
-            'email' => 'aaa@a.com',
-            'password' => 'ganlanshu',
-            'email_verified_at' => now(),
-            'remember_token' => Str::random(10),
-            'is_admin' => false
-        ]);
+        // User::create([
+        //     'name' => 'admin',
+        //     'email' => 'admin@a.com',
+        //     'password' => 'ganlanshu',
+        //     'email_verified_at' => now(),
+        //     'remember_token' => Str::random(10),
+        //     'is_admin' => true
+        // ]);
+        // User::create([
+        //     'name' => 'aaa',
+        //     'email' => 'aaa@a.com',
+        //     'password' => 'ganlanshu',
+        //     'email_verified_at' => now(),
+        //     'remember_token' => Str::random(10),
+        //     'is_admin' => false
+        // ]);
 
         \App\Models\Shoporder::factory(10)->create();
+        \App\Models\Siteorder::factory(10)->create();
     }
 }

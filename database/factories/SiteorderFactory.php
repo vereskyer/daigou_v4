@@ -17,7 +17,11 @@ class SiteorderFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'user_id' => 2,
+            'name' => $this->faker->name,
+            'site' => $this->faker->url,
+            'description' => $this->faker->sentence
+            
         ];
     }
 }
