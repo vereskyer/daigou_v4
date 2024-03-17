@@ -48,9 +48,12 @@ Route::middleware('auth', 'verified')->prefix('user')->group(function () {
     Route::delete('/shoporders/{id}', [\App\Http\Controllers\ShoporderController::class, 'shoporderDelete'])
     ->name('user.shoporders.delete');
 
+    // siteorder routes
+    Route::get('/siteorders', [\App\Http\Controllers\SiteorderController::class, 'userSiteorders'])
+    ->name('user.siteorders');
 
-    // Route::post('/shoporders', [\App\Http\Controllers\ShoporderController::class, 'shoporderStore'])
-    // ->name('user.shoporders.store');
+    // end siteorder routes
+    
 });
 
 Route::get('/dashboard', function () {
@@ -62,6 +65,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+// End user routes
+
 
 // admin routes
 Route::group(['prefix' => 'admin', 'middleware' => 'redirectAdmin'], function () {
