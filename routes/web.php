@@ -37,23 +37,26 @@ Route::middleware('auth', 'verified')->prefix('user')->group(function () {
     })->name('user.index');
 
     Route::get('/shoporders', [\App\Http\Controllers\ShoporderController::class, 'userShoporders'])
-    ->name('user.shoporders');
+        ->name('user.shoporders');
 
     Route::post('/shoporders', [\App\Http\Controllers\ShoporderController::class, 'shoporderStore'])
-    ->name('user.shoporders.store');
+        ->name('user.shoporders.store');
 
     Route::put('/shoporders/{id}', [\App\Http\Controllers\ShoporderController::class, 'shoporderUpdate'])
-    ->name('user.shoporders.update');
+        ->name('user.shoporders.update');
 
     Route::delete('/shoporders/{id}', [\App\Http\Controllers\ShoporderController::class, 'shoporderDelete'])
-    ->name('user.shoporders.delete');
+        ->name('user.shoporders.delete');
 
     // siteorder routes
     Route::get('/siteorders', [\App\Http\Controllers\SiteorderController::class, 'userSiteorders'])
-    ->name('user.siteorders');
+        ->name('user.siteorders');
+
+    Route::post('/siteorders/store', [\App\Http\Controllers\SiteorderController::class, 'siteorderStore'])
+        ->name('user.siteorders.store');
 
     // end siteorder routes
-    
+
 });
 
 Route::get('/dashboard', function () {
@@ -80,4 +83,4 @@ Route::middleware('auth', 'admin')->prefix('admin')->group(function () {
     Route::get('/shoporders', [ShoporderController::class, 'index'])->name('admin.shoporders');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

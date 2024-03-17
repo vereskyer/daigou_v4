@@ -15,4 +15,9 @@ class Siteorder extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function siteorder_images()
+    {
+        return $this->hasMany(SiteorderImage::class);
+    }
 }
