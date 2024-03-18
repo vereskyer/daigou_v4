@@ -12,7 +12,7 @@ class SiteorderController extends Controller
 {
     public function userSiteorders()
     {
-        $siteorders = Siteorder::with('user:id,name')
+        $siteorders = Siteorder::with('user:id,name', 'siteorder_images')
             ->where('user_id', auth()->user()->id)
             ->orderBy('created_at', 'desc')
             ->get();

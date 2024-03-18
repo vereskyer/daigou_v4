@@ -286,9 +286,10 @@ defineProps({
                                 class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
                                     <th scope="col" class="px-4 py-3">商品名称</th>
+                                    <th scope="col" class="px-4 py-3">商品图片</th>
                                     <th scope="col" class="px-4 py-3">网址连接</th>
                                     <th scope="col" class="px-4 py-3">其他说明</th>
-                                    <th scope="col" class="px-4 py-3">商品图片</th>
+                                    
                                     <th scope="col" class="px-4 py-3">
                                         <span class="sr-only">Actions</span>
                                     </th>
@@ -300,9 +301,16 @@ defineProps({
                                     <th scope="row"
                                         class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         {{ siteorder.name }}</th>
+                                        <td class="px-4 py-3">
+                                        <img v-if="siteorder.siteorder_images && siteorder.siteorder_images.length > 0" :src="`/${siteorder.siteorder_images[0].image}`"
+                                        class="w-16 md:w-32 max-w-full max-h-full" alt="Apple Watch">
+                                        <img v-else src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg"
+                                        class="w-16 md:w-32 max-w-full max-h-full" alt="Apple Watch">
+
+                                    </td>
                                     <td class="px-4 py-3">{{ siteorder.site }}</td>
                                     <td class="px-4 py-3">{{ siteorder.description }}</td>
-                                    <td class="px-4 py-3">image</td>
+                                    
                                     <td class="px-4 py-3 flex items-center justify-end">
                                         <button id="`${siteorder.id}`-button" :data-dropdown-toggle="`${siteorder.id}`"
                                             class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
