@@ -55,8 +55,15 @@ Route::middleware('auth', 'verified')->prefix('user')->group(function () {
     Route::post('/siteorders/store', [\App\Http\Controllers\SiteorderController::class, 'siteorderStore'])
         ->name('user.siteorders.store');
 
+    Route::put('/siteorders/update/{id}', [App\Http\Controllers\SiteorderController::class, 'update'])
+        ->name('user.siteorders.update');
+
+
     Route::delete('/siteorders/image/{id}', [App\Http\Controllers\SiteorderController::class, 'deleteImage'])
-        ->name('admin.products.image.delete');
+        ->name('user.siteorders.image.delete');
+
+    Route::delete('/siteorders/{id}', [\App\Http\Controllers\SiteorderController::class, 'siteorderDelete'])
+        ->name('user.siteorders.delete');
 
 
     // end siteorder routes

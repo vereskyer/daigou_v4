@@ -84,7 +84,7 @@ const resetFormData = () => {
 }
 
 const openEditModal = (siteorder) => {
-    console.log(siteorder);
+    // console.log(siteorder);
     dialogVisible.value = true
     isAddProduct.value = false
     editMode.value = true
@@ -117,6 +117,57 @@ const deleteImage = async (pimage, index) => {
         console.log(error)
     }
 }
+
+const updateProduct = async () => {
+    const formData = new FormData();
+
+    formData.append('name', name.value)
+    formData.append('site', site.value)
+    formData.append('description', description.value)
+    formData.append('_method', 'PUT')
+    // append product images
+    for (const image of siteorderImages.value) {
+        formData.append('siteorder_images[]', image.raw)
+    }
+
+    try {
+        await router.post('/siteorders/update/' + id.value, formData, {
+            onSuccess: page => {
+                dialogVisible.value = false;
+                resetFormData();
+                Swal.fire({
+                    toast: true,
+                    icon: 'success',
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    title: page.props.flash.success
+                })
+            }
+        })
+    } catch (error) {
+        console.log(error)
+
+    }
+}
+
+const deleteSiteorder = async (siteorder) => {
+    try {
+        await router.delete('/user/siteorders/' + siteorder.id, {
+            onSuccess: page => {
+                Swal.fire({
+                    toast: true,
+                    icon: 'success',
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    title: page.props.flash.success
+                })
+            }
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 
 
 const handleClose = (done) => {
@@ -260,7 +311,8 @@ defineProps({
                                     </ul>
                                     <div class="py-1">
                                         <a href="#"
-                                            class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete
+                                            class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                            Delete
                                             all</a>
                                     </div>
                                 </div>
@@ -384,7 +436,7 @@ defineProps({
                                                 </li>
                                             </ul>
                                             <div class="py-1">
-                                                <a href="#"
+                                                <a href="#" @click="deleteSiteorder(siteorder)"
                                                     class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                                                     Delete</a>
                                             </div>

@@ -54,4 +54,41 @@ class SiteorderController extends Controller
         $image->delete();
         return redirect()->back()->with('success', 'Image deleted successfully');
     }
+
+    public function update($id, Request $request)
+    {
+        dd($request->all());
+
+        $siteorder = Siteorder::findOrFail($id);
+        $siteorder->name = $request->name;
+        $siteorder->site = $request->site;
+        $siteorder->description = $request->description;
+        // check if image is uploaded
+        if ($request->hasFile('siteorder_images')) {
+            $siteorderImages = $request->file('siteorder_images');
+            foreach ($siteorderImages as $image) {
+                // generate a unique name for the image using timestamp and random string
+                $uniqueName = time() . '-' . Str::random(10) . '.' . $image->getClientOriginalExtension();
+
+                // store the image in the public directory
+                $image->move(public_path('siteorder_images'), $uniqueName);
+
+                // create a new product image record with the unique name & product id
+                SiteorderImage::create([
+                    'siteorder_id' => $siteorder->id,
+                    'image' => 'siteorder_images/' . $uniqueName,
+                ]);
+            }
+        }
+        $siteorder->update();
+        return redirect()->back()->with('success', 'Product updated successfully');
+    }
+
+    public function siteorderDelete($id)
+    {
+        $siteorder = Siteorder::findOrFail($id);
+        $siteorder->delete();
+        return redirect()->back()->with('success', 'Product deleted successfully');
+    }
+
 }
