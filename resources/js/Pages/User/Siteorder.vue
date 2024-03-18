@@ -120,21 +120,18 @@ const deleteImage = async (pimage, index) => {
 
 const updateProduct = async () => {
     const formData = new FormData();
+    formData.append('name', name.value);
+    formData.append('site', site.value);
+    formData.append('description', description.value);
+    formData.append('_method', 'put');
 
-    formData.append('name', name.value)
-    formData.append('site', site.value)
-    formData.append('description', description.value)
-    formData.append('_method', 'PUT')
-    // append product images
+    // append siteorder images to the Formdata
     for (const image of siteorderImages.value) {
-        formData.append('siteorder_images[]', image.raw)
+        formData.append('siteorder_images[]', image.raw);
     }
-
     try {
-        await router.post('/siteorders/update/' + id.value, formData, {
+        await router.post('/user/siteorders/update/' + id.value, formData, {
             onSuccess: page => {
-                dialogVisible.value = false;
-                resetFormData();
                 Swal.fire({
                     toast: true,
                     icon: 'success',
@@ -142,11 +139,12 @@ const updateProduct = async () => {
                     showConfirmButton: false,
                     title: page.props.flash.success
                 })
-            }
+                dialogVisible.value = false;
+                resetFormData();
+            },
         })
-    } catch (error) {
-        console.log(error)
-
+    } catch (err) {
+        console.log(err)
     }
 }
 

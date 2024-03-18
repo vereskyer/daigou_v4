@@ -55,33 +55,30 @@ class SiteorderController extends Controller
         return redirect()->back()->with('success', 'Image deleted successfully');
     }
 
-    public function update($id, Request $request)
+    public function update(Request $request, $id)
     {
-        dd($request->all());
-
         $siteorder = Siteorder::findOrFail($id);
         $siteorder->name = $request->name;
         $siteorder->site = $request->site;
         $siteorder->description = $request->description;
-        // check if image is uploaded
+        $siteorder->save();
+
+        // if have images
         if ($request->hasFile('siteorder_images')) {
             $siteorderImages = $request->file('siteorder_images');
             foreach ($siteorderImages as $image) {
-                // generate a unique name for the image using timestamp and random string
-                $uniqueName = time() . '-' . Str::random(10) . '.' . $image->getClientOriginalExtension();
-
-                // store the image in the public directory
-                $image->move(public_path('siteorder_images'), $uniqueName);
-
-                // create a new product image record with the unique name & product id
+                // generate a unique name for the image using timestamp & random string
+                $imageName = time() . '-' . Str::random(10) . '.' . $image->getClientOriginalExtension();
+                // store the image in the public folder with the unique name
+                $image->move(public_path('siteorder_images'), $imageName);
+                // create a new siteorder image record with the siteorder id & image name
                 SiteorderImage::create([
                     'siteorder_id' => $siteorder->id,
-                    'image' => 'siteorder_images/' . $uniqueName,
+                    'image' => 'siteorder_images/' . $imageName
                 ]);
             }
         }
-        $siteorder->update();
-        return redirect()->back()->with('success', 'Product updated successfully');
+        return redirect()->route('user.siteorders')->with('success', 'Siteorder updated successfully');
     }
 
     public function siteorderDelete($id)
