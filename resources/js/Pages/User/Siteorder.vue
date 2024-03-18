@@ -4,6 +4,8 @@ import { usePage, router } from '@inertiajs/vue3'
 
 import { ref } from 'vue'
 import { ElMessageBox } from 'element-plus'
+import { Plus } from '@element-plus/icons-vue'
+// import Swal from 'sweetalert2'
 
 const isAddProduct = ref(false)
 const dialogVisible = ref(false)
@@ -14,6 +16,8 @@ const id = ref('')
 const name = ref('')
 const site = ref('')
 const description = ref('')
+const siteorder_images = ref([])
+const siteorderImages = ref([])
 //end
 
 // open add modal
@@ -23,11 +27,33 @@ const openAddModal = () => {
     editMode.value = false
 }
 
+// 图片相关配置
+const dialogImageUrl = ref('')
+const handleFileChange = (file) => {
+    siteorderImages.value.push(file)
+}
+
+// 控制图片
+const handlePictureCardPreview = (file) => {
+    dialogImageUrl.value = file.url
+    dialogVisible.value = true
+}
+
+// 控制图片
+const handleRemove = (file) => {
+    console.log(file);
+}
+
 const AddProduct = async () => {
     const formData = new FormData();
     formData.append('name', name.value);
     formData.append('site', site.value);
     formData.append('description', description.value);
+
+    // append siteorder images to the Formdata
+    for (const image of siteorderImages.value) {
+        formData.append('siteorder_images[]', image.raw);
+    }
 
     try {
         await router.post('/user/siteorders/store', formData, {
@@ -71,7 +97,10 @@ const handleClose = (done) => {
         })
 }
 
-const siteorders = usePage().props.siteorders
+// const siteorders = usePage().props.siteorders
+defineProps({
+    siteorders: Array
+})
 </script>
 <template>
     <Layouts>
@@ -109,6 +138,20 @@ const siteorders = usePage().props.siteorders
                             <textarea id="description" rows="4" v-model="description"
                                 class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="如果有其他注意事项，请这里说明..."></textarea>
+
+                        </div>
+
+                        <div class="relative z-0 w-full mb-6 group">
+
+                            <el-upload v-model:file-list="siteorderImages"
+                                list-type="picture-card" multiple
+                                :on-preview="handlePictureCardPreview"
+                                :on-remove="handleRemove"
+                                :on-change="handleFileChange">
+                                <el-icon>
+                                    <Plus />
+                                </el-icon>
+                            </el-upload>
 
                         </div>
 

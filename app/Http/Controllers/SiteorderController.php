@@ -23,6 +23,7 @@ class SiteorderController extends Controller
 
     public function siteorderStore(Request $request)
     {
+        // dd($request->file('siteorder_images'));
         $siteorder = new Siteorder();
         $siteorder->user_id = auth()->user()->id;
         $siteorder->name = $request->name;
@@ -30,20 +31,20 @@ class SiteorderController extends Controller
         $siteorder->description = $request->description;
         $siteorder->save();
 
-        // if ($request->hasFile('siteorder_images')) {
-        //     $siteorderImages = $request->file('siteorder_images');
-        //     foreach ($siteorderImages as $image) {
-        //         // generate a unique name for the image using timestamp & random string
-        //         $imageName = time() . '-' . Str::random(10) . '.' . $image->getClientOriginalExtension();
-        //         // store the image in the public folder with the unique name
-        //         $image->move(public_path('siteorder_images'), $imageName);
-        //         // create a new siteorder image record with the siteorder id & image name
-        //         SiteorderImage::create([
-        //             'siteorder_id' => $siteorder->id,
-        //             'image' => 'siteorder_images/' . $imageName
-        //         ]);
-        //     }
-        // }
+        if ($request->hasFile('siteorder_images')) {
+            $siteorderImages = $request->file('siteorder_images');
+            foreach ($siteorderImages as $image) {
+                // generate a unique name for the image using timestamp & random string
+                $imageName = time() . '-' . Str::random(10) . '.' . $image->getClientOriginalExtension();
+                // store the image in the public folder with the unique name
+                $image->move(public_path('siteorder_images'), $imageName);
+                // create a new siteorder image record with the siteorder id & image name
+                SiteorderImage::create([
+                    'siteorder_id' => $siteorder->id,
+                    'image' => 'siteorder_images/' . $imageName
+                ]);
+            }
+        }
         redirect()->route('user.siteorders')->with('success', 'Siteorder created successfully');
     }
 }
