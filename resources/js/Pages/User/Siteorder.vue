@@ -85,7 +85,36 @@ const openEditModal = (siteorder) => {
     dialogVisible.value = true
     isAddProduct.value = false
     editMode.value = true
+
+    // Bring in data
+    id.value = siteorder.id
+    name.value = siteorder.name
+    site.value = siteorder.site
+    description.value = siteorder.description
+    siteorder_images.value = siteorder.siteorder_images
 }
+
+// delete single image when edit
+const deleteImage = async (pimage, index) => {
+    try {
+        await router.delete('/admin/products/image/' + pimage.id, {
+            onSuccess: (page) => {
+                product_images.value.splice(index, 1)
+                Swal.fire({
+                    toast: true,
+                    icon: 'success',
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    title: page.props.flash.success
+                })
+            }
+
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 
 const handleClose = (done) => {
     ElMessageBox.confirm('Are you sure to close this dialog?')
@@ -150,6 +179,20 @@ defineProps({
                                     <Plus />
                                 </el-icon>
                             </el-upload>
+
+                            <!-- list of images for selected product -->
+                            <div class="flex flex-nowrap mb-8">
+                                <div v-for="(pimage, index) in siteorder_images" :key="pimage.id" class="relative">
+                                    <img class="w-24 h-24 rounded" :src="`/${pimage.image}`" alt="">
+                                    <span
+                                        class="absolute top-0 right-8 transform -translate-y-1/2 w-3.5 h-3.5 bg-red-400 border-2 border-white dark:border-gray-800 rounded-full">
+                                        <span @click="deleteImage(pimage, index)"
+                                            class="text-white text-xs font-bold absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                            x
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
 
                         </div>
 

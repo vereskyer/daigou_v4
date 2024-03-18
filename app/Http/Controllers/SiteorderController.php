@@ -47,4 +47,11 @@ class SiteorderController extends Controller
         }
         redirect()->route('user.siteorders')->with('success', 'Siteorder created successfully');
     }
+
+    public function deleteImage($id)
+    {
+        $image = SiteorderImage::find($id);
+        $image->delete();
+        return redirect()->back()->with('success', 'Image deleted successfully');
+    }
 }
