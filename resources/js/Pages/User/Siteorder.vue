@@ -78,6 +78,9 @@ const resetFormData = () => {
     name.value = ''
     site.value = ''
     description.value = ''
+    siteorderImages.value = []
+    dialogImageUrl.value = ''
+
 }
 
 const openEditModal = (siteorder) => {
@@ -97,9 +100,9 @@ const openEditModal = (siteorder) => {
 // delete single image when edit
 const deleteImage = async (pimage, index) => {
     try {
-        await router.delete('/admin/products/image/' + pimage.id, {
+        await router.delete('/user/siteorders/image/' + pimage.id, {
             onSuccess: (page) => {
-                product_images.value.splice(index, 1)
+                siteorder_images.value.splice(index, 1)
                 Swal.fire({
                     toast: true,
                     icon: 'success',
