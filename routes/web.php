@@ -66,9 +66,11 @@ Route::middleware('auth', 'verified')->prefix('user')->group(function () {
 
     Route::delete('/siteorders/{id}', [\App\Http\Controllers\SiteorderController::class, 'siteorderDelete'])
         ->name('user.siteorders.delete');
-
-
     // end siteorder routes
+
+    // korean routes
+    Route::get('/korean', [\App\Http\Controllers\SiteorderController::class, 'korean'])
+    ->name('user.korean');
 
 });
 

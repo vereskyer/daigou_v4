@@ -88,4 +88,9 @@ class SiteorderController extends Controller
         return redirect()->back()->with('success', 'Product deleted successfully');
     }
 
+    public function korean()
+    {
+        return Inertia::render('User/Korean');
+    }
+
 }
