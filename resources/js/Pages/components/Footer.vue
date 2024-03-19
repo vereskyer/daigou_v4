@@ -25,8 +25,8 @@
                     <a href="#" class="mr-4 hover:underline md:mr-6">Contact</a>
                 </li>
             </ul>
-            <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2021-2022 <a href="#"
-                    class="hover:underline">Flowbite™</a>. All Rights Reserved.</span>
+            <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023-2025 <a href="#"
+                    class="hover:underline">KoreaMike™</a>. All Rights Reserved.</span>
         </div>
     </footer>
 </template>
