@@ -14,5 +14,6 @@ Route::group([
     $router->get('/', 'HomeController@index')->name('home');
     $router->resource('siteorders', SiteorderController::class);
     $router->resource('shoporders', ShoporderController::class);
+    $router->resource('users', UserController::class);
 
 });
