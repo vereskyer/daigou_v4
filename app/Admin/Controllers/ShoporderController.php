@@ -2,11 +2,12 @@
 
 namespace App\Admin\Controllers;
 
-use OpenAdmin\Admin\Controllers\AdminController;
 use OpenAdmin\Admin\Form;
 use OpenAdmin\Admin\Grid;
 use OpenAdmin\Admin\Show;
 use \App\Models\Shoporder;
+use Illuminate\Support\Carbon;
+use OpenAdmin\Admin\Controllers\AdminController;
 
 class ShoporderController extends AdminController
 {
@@ -34,9 +35,18 @@ class ShoporderController extends AdminController
         $grid->column('building', __('Building'));
         $grid->column('position', __('Position'));
         $grid->column('phone', __('Phone'));
-        $grid->column('description', __('Description'));
+        $grid->column('description', __('Description'))->display(function ($description) {
+            // 将描述字段每30个字符换行
+            $description = wordwrap($description, 100, "<br>\n", true);
+            // 如果超过200个字符，只显示前200个字符
+            $description = strlen($description) > 200 ? substr($description, 0, 200) . '...' : $description;
+            return $description;
+        });
         $grid->column('status', __('Status'));
-        $grid->column('created_at', __('Created at'));
+        $grid->column('created_at', __('Created at'))->display(function ($createdAt) {
+            // 将 UTC 时间转换为韩国当地时间
+            return Carbon::parse($createdAt)->timezone('Asia/Seoul')->toDateTimeString();
+        });
 
         return $grid;
     }
