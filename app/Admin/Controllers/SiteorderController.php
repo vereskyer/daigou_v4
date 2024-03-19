@@ -56,6 +56,7 @@ class SiteorderController extends AdminController
             $description = strlen($description) > 200 ? substr($description, 0, 200) . '...' : $description;
             return $description;
         });
+        $grid->column('status', __('Status'));
         $grid->column('created_at', __('Created at'))->display(function ($createdAt) {
             // 将 UTC 时间转换为韩国当地时间
             return Carbon::parse($createdAt)->timezone('Asia/Seoul')->toDateTimeString();
@@ -79,6 +80,7 @@ class SiteorderController extends AdminController
         $show->field('name', __('Name'));
         $show->field('site', __('Site'));
         $show->field('description', __('Description'));
+        $show->field('status', __('Status'));
         $show->field('created_at', __('Created at'));
         $show->field('updated_at', __('Updated at'));
 
@@ -98,6 +100,7 @@ class SiteorderController extends AdminController
         $form->text('name', __('Name'));
         $form->text('site', __('Site'));
         $form->textarea('description', __('Description'));
+        $form->text('status', __('Status'));
 
         return $form;
     }

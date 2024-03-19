@@ -383,6 +383,7 @@ defineProps({
                                     <th scope="col" class="px-4 py-3">商品图片</th>
                                     <th scope="col" class="px-4 py-3">网址连接</th>
                                     <th scope="col" class="px-4 py-3">其他说明</th>
+                                    <th scope="col" class="px-4 py-3">状态</th>
 
                                     <th scope="col" class="px-4 py-3">
                                         <span class="sr-only">Actions</span>
@@ -410,7 +411,11 @@ defineProps({
                                         </a>
                                     </td>
                                     <td class="px-4 py-3">
-                                        {{ siteorder.description ? siteorder.description.substring(0, 50) : '' }}</td>
+                                        {{ siteorder.description ? siteorder.description.substring(0, 50) : '' }}
+                                    </td>
+                                    <td class="px-4 py-3">
+                                        {{ siteorder.status }}
+                                    </td>
 
                                     <td class="px-4 py-3 flex items-center justify-end">
                                         <button id="`${siteorder.id}`-button" :data-dropdown-toggle="`${siteorder.id}`"
