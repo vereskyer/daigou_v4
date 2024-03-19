@@ -20,6 +20,7 @@
     "dependencies": {
         "element-plus": "^2.6.1",
         "flowbite": "^2.3.0",
-        "vue-sweetalert2": "^5.0.5"
+        "vue-sweetalert2": "^5.0.5",
+        "vue3-clipboard": "^1.0.0"
     }
 }

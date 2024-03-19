@@ -16,6 +16,8 @@ import 'element-plus/dist/index.css'
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 
+import VueClipboard from 'vue3-clipboard'
+
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
     resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
@@ -25,6 +27,7 @@ createInertiaApp({
             app.use(ZiggyVue)
             app.use(ElementPlus)
             app.use(VueSweetalert2);
+            app.use(VueClipboard)
             window.Swal =  app.config.globalProperties.$swal
             app.mount(el);
     },
