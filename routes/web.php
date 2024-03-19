@@ -72,6 +72,10 @@ Route::middleware('auth', 'verified')->prefix('user')->group(function () {
     Route::get('/korean', [\App\Http\Controllers\SiteorderController::class, 'korean'])
     ->name('user.korean');
 
+    // korean routes
+    Route::get('/namecard', [\App\Http\Controllers\SiteorderController::class, 'namecard'])
+    ->name('user.namecard');
+
 });
 
 Route::get('/dashboard', function () {

@@ -93,4 +93,12 @@ class SiteorderController extends Controller
         return Inertia::render('User/Korean');
     }
 
+    public function namecard()
+    {
+        $users = auth()->user();
+        return Inertia::render('User/NameCard', [
+            'users' => $users
+        ]);
+    }
+
 }
