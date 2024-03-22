@@ -134,8 +134,9 @@
 
             <div class="grid grid-cols-3 divide-x">
                 <div class="flex items-center">
-                    <span class="text-left col-span-2 font-bold bg-blue-500 text-white bg-blue-500 text-white">10</span>
-                    <span class="text-center flex-grow font-bold bg-blue-500 text-white bg-blue-500 text-white">晚上讓大叔去取</span>
+                    <span class="text-left col-span-2 font-bold bg-blue-500 text-white">10</span>
+                    <span
+                        class="text-center flex-grow font-bold bg-blue-500 text-white">晚上讓大叔去取</span>
                 </div>
                 <div>
                     <CopyToClipboard id="send-ancle-tonight" label="Label" text="밤에 삼촌 보낼게요" inputClasses="col-span-6 bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 
@@ -158,8 +159,9 @@
 
             <div class="grid grid-cols-3 divide-x">
                 <div class="flex items-center">
-                    <span class="text-left col-span-2 font-bold bg-blue-500 text-white bg-blue-500 text-white">12</span>
-                    <span class="text-center flex-grow font-bold bg-blue-500 text-white bg-blue-500 text-white">檔口問：怎麼付款？</span>
+                    <span class="text-left col-span-2 font-bold bg-blue-500 text-white">12</span>
+                    <span
+                        class="text-center flex-grow font-bold bg-blue-500 text-white">檔口問：怎麼付款？</span>
                 </div>
                 <div>
                     <CopyToClipboard id="how-to-pay" label="Label" text="결제 어덯게 할까요?" inputClasses="col-span-6 bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 
@@ -181,8 +183,9 @@
 
             <div class="grid grid-cols-3 divide-x">
                 <div class="flex items-center">
-                    <span class="text-left col-span-2 font-bold bg-blue-500 text-white bg-blue-500 text-white">13</span>
-                    <span class="text-center flex-grow font-bold bg-blue-500 text-white bg-blue-500 text-white">檔口問怎麼取貨</span>
+                    <span class="text-left col-span-2 font-bold bg-blue-500 text-white">13</span>
+                    <span
+                        class="text-center flex-grow font-bold bg-blue-500 text-white">檔口問怎麼取貨</span>
                 </div>
                 <div>
                     <CopyToClipboard id="will-send-ancle" label="Label" text="삼촌 보낼게요." inputClasses="col-span-6 bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 
@@ -393,7 +396,7 @@
                     <span class="text-center flex-grow font-bold bg-blue-500 text-white">老闆，幫我寫這個名字</span>
                 </div>
                 <div>
-                    <CopyToClipboard id="write-my-name" label="Label" text="마이클-xxx 이름으로 적어주세요." inputClasses="col-span-6 bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 
+                    <CopyToClipboard id="write-my-name" label="Label" :text="`마이클-${user.name} 이름으로 적어주세요.`" inputClasses="col-span-6 bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 
             block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 
             dark:focus:border-blue-500" />
                 </div>
@@ -571,4 +574,7 @@
 // 导入所需的组件
 import Layouts from './components/Layouts.vue';
 import CopyToClipboard from './components/CopyToClipboard.vue';
+import { usePage } from '@inertiajs/vue3'
+
+const user = usePage().props.auth.user
 </script>
